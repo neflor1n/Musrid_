@@ -2,7 +2,8 @@ from tkinter import *
 from tkinter import font # vajalik teksti fondi miitmiseks
 from random import *
 import tkinter as tk
-
+import time
+import random
 
 raam = Tk()
 raam.title("Tahvel")
@@ -198,36 +199,58 @@ def english_flag():
     root.mainloop()
 
 
-def valgusfoor():
-    """ Valgusfoor
 
-    """
+def valgusfoor():
+    """Valgusfoor"""
+
     root = tk.Tk()
     root.title("ValgusFoor")
-    root.geometry("800x800")
-    canvas = tk.Canvas(root, width=800, height=800, bg = "white")
+    root.geometry("300x600")
+    canvas = tk.Canvas(root, width=300, height=600, bg="white")
     canvas.pack()
+
+    def blink():
+        nonlocal red_light, yellow_light, green_light
+        if canvas.itemcget(red_light, "fill") == "grey":
+            canvas.itemconfig(red_light, fill="red")
+            canvas.itemconfig(yellow_light, fill="grey")
+            canvas.itemconfig(green_light, fill="grey")
+        elif canvas.itemcget(yellow_light, "fill") == "grey":
+            canvas.itemconfig(red_light, fill="grey")
+            canvas.itemconfig(yellow_light, fill="yellow")
+            canvas.itemconfig(green_light, fill="grey")
+        else:
+            canvas.itemconfig(red_light, fill="grey")
+            canvas.itemconfig(yellow_light, fill="grey")
+            canvas.itemconfig(green_light, fill="green")
+
+        root.after(1000, blink)
+
+        root.after(1000, blink)
+
+    root.after(1000, blink)
+
 
     square_side = 80
     square_x1 = (300 - square_side) / 2
     square_y1 = (100 - square_side) / 2
     square_x2 = square_x1 + square_side
     square_y2 = square_y1 + square_side
-    square1 = canvas.create_rectangle(square_x1, square_y1, square_x2, square_y2, fill="red")
+    red_light = canvas.create_oval(square_x1, square_y1, square_x2, square_y2, fill="grey")
 
     square2_side = 80
     square2_x1 = (300 - square_side) / 2
     square2_y1 = (285 - square_side) / 2
     square2_x2 = square2_x1 + square2_side
     square2_y2 = square2_y1 + square2_side
-    square2 = canvas.create_rectangle(square2_x1, square2_y1, square2_x2, square2_y2, fill="yellow")
+    yellow_light = canvas.create_oval(square2_x1, square2_y1, square2_x2, square2_y2, fill="grey")
 
     square3_side = 80
     square3_x1 = (300 - square_side) / 2
     square3_y1 = (470 - square_side) / 2
     square3_x2 = square3_x1 + square3_side
     square3_y2 = square3_y1 + square3_side
-    square3 = canvas.create_rectangle(square3_x1, square3_y1, square3_x2, square3_y2, fill="green")
+    green_light = canvas.create_oval(square3_x1, square3_y1, square3_x2, square3_y2, fill="grey")
 
     stick_side = 10
 
@@ -239,11 +262,16 @@ def valgusfoor():
 
     horizontal_stick_side = 10
     horizontal_stick_x1 = (50 - horizontal_stick_side) / 2
-    horizontal_stick_y1 = (1060  - horizontal_stick_side) / 2
+    horizontal_stick_y1 = (1060 - horizontal_stick_side) / 2
     horizontal_stick_x2 = horizontal_stick_x1 + horizontal_stick_side * 25
     horizontal_stick_y2 = horizontal_stick_y1 + horizontal_stick_side
-    horizontal_stick = canvas.create_rectangle(horizontal_stick_x1, horizontal_stick_y1, horizontal_stick_x2, horizontal_stick_y2, fill="black")
+    horizontal_stick = canvas.create_rectangle(horizontal_stick_x1, horizontal_stick_y1, horizontal_stick_x2,
+                                               horizontal_stick_y2, fill="black")
+    current_light = "red"
+    blink()
     root.mainloop()
+
+
 
 
 def chess():
@@ -284,4 +312,5 @@ english.place(x = 400, y = 660)
 valgusfoor.place(x = 400, y = 720)
 bahama.place(x = 400, y = 790)
 chess.place(x = 400, y = 860)
+
 raam.mainloop()
