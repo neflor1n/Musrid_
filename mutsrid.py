@@ -6,7 +6,7 @@ import tkinter as tk
 
 raam = Tk()
 raam.title("Tahvel")
-tahvel = Canvas(raam, width= 900, height = 900, background = 'white')
+tahvel = Canvas(raam, width= 1000, height = 1000, background = 'white')
 tahvel.grid()
 
 # Üksik kriips (x0, y0, x1, y1)
@@ -38,6 +38,8 @@ def rainbow_oval():
     root = tk.Tk()
     root.title("Rainbow Oval")
     root.geometry("800x800")
+    canvas = tk.Canvas(root, width=800, height=800, bg="white")
+    canvas.pack()
     x0 = 0
     y0 = 0
     x1 = 600
@@ -48,7 +50,7 @@ def rainbow_oval():
         y0 += p
         x1 -= p
         y1 -= p
-        tahvel.create_oval(x0, y0, x1, y1, fill=choice(colors))
+        canvas.create_oval(x0, y0, x1, y1, fill=choice(colors))
 
     root.mainloop()
 
@@ -60,6 +62,8 @@ def circle_in_square():
     root = tk.Tk()
     root.title("Круг в квадрате")
     root.geometry("1000x1000")
+    canvas = tk.Canvas(root, width=800, height=800, bg="white")
+    canvas.pack()
     x0 = 0
     y0 = 0
     x1 = 600
@@ -72,8 +76,8 @@ def circle_in_square():
         y0 += p
         x1 -= p
         y1 -= p
-        tahvel.create_rectangle(x0, y0, x1, y1, fill=choice(colors))
-        tahvel.create_oval(x0, y0, x1, y1, fill=choice(colors))
+        canvas.create_rectangle(x0, y0, x1, y1, fill=choice(colors))
+        canvas.create_oval(x0, y0, x1, y1, fill=choice(colors))
         x_ -= 2 * p
         y_ -= 2 * p
         p = int(((x_ ** 2+y_ ** 2) **(1/2) - x_)/2)
@@ -242,7 +246,24 @@ def valgusfoor():
     root.mainloop()
 
 
+def chess():
 
+    root = tk.Tk()
+    root.title("Chess")
+    canvas = tk.Canvas(root, width=800, height=800, bg="white")
+    canvas.pack()
+
+    canvas.delete("all")
+    for i in range(8):
+        for j in range(8):
+            if (i + j) % 2 == 0:
+                color = "#FFFFFF"
+            else:
+                color = "#000000"
+            canvas.create_rectangle(j * 25, i * 25, (j + 1) * 25, (i + 1) * 25, fill=color)
+
+
+    root.mainloop()
 
 
 var = IntVar()
@@ -253,7 +274,7 @@ belgia = Radiobutton(raam, text='Belgian Flag', variable = var, value = 4, font 
 english = Radiobutton(raam, text='English Flag', variable = var, value = 5, font = suur_font, command=english_flag)
 valgusfoor = Radiobutton(raam, text='Valgusfoor', variable = var, value =6, font = suur_font, command=valgusfoor)
 bahama = Radiobutton(raam, text='Bahama', variable=var, value = 7, font = suur_font, command=bahama_flag)
-
+chess = Radiobutton(raam, text='Chess', variable=var, value = 8, font = suur_font, command=chess)
 
 ovall.place(x = 400, y = 450)
 square.place(x = 400, y = 520)
@@ -262,5 +283,5 @@ belgia.place(x = 400, y = 590)
 english.place(x = 400, y = 660)
 valgusfoor.place(x = 400, y = 720)
 bahama.place(x = 400, y = 790)
-
+chess.place(x = 400, y = 860)
 raam.mainloop()
